@@ -82,6 +82,7 @@ body {
     box-shadow: 0 8px 32px var(--glass-shadow);
     transition: all 0.3s ease;
     gap: 0.5rem;
+    text-align: center;
 }
 
 h1 {
@@ -508,6 +509,7 @@ tr:hover {
         flex-direction: column;
         gap: 1rem;
         padding: 1rem;
+        text-align: center;
     }
 
     .main-header h1 {
