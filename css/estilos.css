@@ -1,0 +1,749 @@
+:root {
+    --bg-color: #f8f9fa;
+    --text-color: #333;
+    --header-bg: #ffffff;
+    --tab-bg: #e5e7eb;
+    --tab-active: #3b82f6;
+    --tab-hover: #d1d5db;
+    --input-bg: #ffffff;
+    --input-border: #ccc;
+    --table-bg: #ffffff;
+    --table-border: #ddd;
+    --table-header: rgba(241, 245, 249, 0.65);
+    --table-hover: #f8fafc;
+    --shadow: rgba(0, 0, 0, 0.1);
+    --status-color: #555;
+    --icon-color: #000;
+    --unicode-color: #64748b;
+    /* Variables para glassmorfismo */
+    --glass-bg: rgba(255, 255, 255, 0.85);
+    --glass-border: rgba(0, 0, 0, 0.18);
+    --glass-shadow: rgba(31, 38, 135, 0.15);
+    --glass-backdrop: blur(10px);
+    /* Variables de gradiente */
+    --gradient-start: #667eea;
+    --gradient-end: #764ba2;
+}
+
+[data-theme="dark"] {
+    --bg-color: #1a1a1a;
+    --text-color: #e5e5e5;
+    --header-bg: #2d2d2d;
+    --tab-bg: #404040;
+    --tab-active: #2563eb;
+    --tab-hover: #525252;
+    --input-bg: #2d2d2d;
+    --input-border: #525252;
+    --table-bg: #2d2d2d;
+    --table-border: #404040;
+    --table-header: rgba(64, 64, 64, 0.85);
+    --table-hover: #404040;
+    --shadow: rgba(0, 0, 0, 0.3);
+    --status-color: #a0a0a0;
+    --icon-color: #e5e5e5;
+    --unicode-color: #9ca3af;
+    /* Variables para glassmorfismo en tema oscuro */
+    --glass-bg: rgba(45, 45, 45, 0.65);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-shadow: rgba(0, 0, 0, 0.3);
+    --glass-backdrop: blur(10px);
+    /* Variables de gradiente para tema oscuro */
+    --gradient-start: #1a1a2e;
+    --gradient-end: #16213e;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: system-ui, -apple-system, sans-serif;
+    background: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto 2rem;
+    padding: 1.5rem;
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-backdrop);
+    -webkit-backdrop-filter: var(--glass-backdrop);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px var(--glass-shadow);
+    transition: all 0.3s ease;
+    gap: 0.5rem;
+}
+
+h1 {
+    margin: 0 auto;
+    font-size: 1.8rem;
+}
+
+.tabsysearch {
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-backdrop);
+    -webkit-backdrop-filter: var(--glass-backdrop);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 8px;
+    box-shadow: 0 8px 32px var(--glass-shadow);
+}
+
+.tabs {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    z-index: 100;
+    transition: all 0.3s ease;
+}
+
+.tab-button {
+    padding: 12px;
+    font-size: 1.1rem;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+    margin: 0 4px;
+    color: var(--text-color);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+}
+
+.tab-button.active {
+    background: var(--tab-active);
+    color: white;
+    font-weight: bold;
+}
+
+.tab-button:hover:not(.active) {
+    background: var(--tab-hover);
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.search-container {
+    width: 100%;
+    text-align: center;
+    z-index: 99;
+    transition: all 0.3s ease;
+}
+
+input.search {
+    width: 100%;
+    margin: 15px auto 0 auto;
+    padding: 12px;
+    font-size: 1rem;
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+    box-sizing: border-box;
+    background: var(--glass-bg);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    color: var(--text-color);
+    transition: all 0.3s ease;
+}
+
+.contenedortabla {
+    width: 90%;
+    margin: 0 auto;
+    overflow: visible;
+    position: relative;
+}
+
+table {
+    border-radius: 20px !important;
+}
+
+th,
+td {
+    padding: 12px 16px;
+    text-align: center;
+    font-size: 1.5em;
+    background: transparent;
+    border: 1px solid var(--glass-border);
+}
+
+thead {
+    width: 100%;
+    background: var(--glass-bg) !important;
+    backdrop-filter: var(--glass-backdrop) !important;
+    -webkit-backdrop-filter: var(--glass-backdrop) !important;
+}
+
+.dataTables_wrapper {
+    position: relative;
+    z-index: 1;
+}
+
+.dt-layout-row:first-child {
+    position: sticky !important;
+    top: 65px !important;
+    padding: 10px !important;
+    z-index: 1001 !important;
+    background: var(--glass-bg) !important;
+    backdrop-filter: var(--glass-backdrop) !important;
+    -webkit-backdrop-filter: var(--glass-backdrop) !important;
+}
+
+.contenedortabla {
+    position: relative;
+}
+
+th {
+    background: var(--glass-bg) !important;
+    font-weight: 600;
+    backdrop-filter: var(--glass-backdrop);
+    -webkit-backdrop-filter: var(--glass-backdrop);
+    position: relative;
+    padding-bottom: 8px !important;
+}
+
+/* Estilos para inputs de búsqueda por columna */
+.column-search {
+    width: 100%;
+    padding: 6px 8px;
+    padding-right: 30px;
+    /* Espacio para el icono */
+    margin-top: 8px;
+    border: 1px solid var(--input-border);
+    border-radius: 6px;
+    background: var(--input-bg);
+    color: var(--text-color);
+    font-size: 0.85rem;
+    transition: all 0.3s ease;
+    outline: none;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+}
+
+.column-search:focus {
+    border-color: var(--tab-active);
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+.column-search::placeholder {
+    color: var(--status-color);
+    opacity: 0.7;
+}
+
+/* Contenedor de búsqueda por columna */
+.column-search-container {
+    margin-top: 8px;
+    position: relative;
+    width: 100%;
+}
+
+/* Icono de búsqueda en inputs de columna */
+.column-search-icon {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.5;
+    font-size: 14px;
+    pointer-events: none;
+    color: var(--status-color);
+    transition: opacity 0.2s ease;
+}
+
+tr:hover {
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-backdrop);
+    -webkit-backdrop-filter: var(--glass-backdrop);
+}
+
+.fixedHeader-floating {
+    background: var(--glass-bg) !important;
+    backdrop-filter: var(--glass-backdrop) !important;
+    -webkit-backdrop-filter: var(--glass-backdrop) !important;
+}
+
+.icon-preview {
+    font-size: 32px;
+    color: var(--icon-color);
+    text-align: center;
+    width: 60px;
+}
+
+.name,
+.class,
+.unicode {
+    text-align: center !important;
+    white-space: nowrap !important;
+}
+
+.cell-content {
+    display: inline-block !important;
+    white-space: nowrap !important;
+    margin-right: 8px !important;
+}
+
+.name {
+    font-family: monospace;
+}
+
+.unicode {
+    color: var(--text-color);
+    font-family: monospace;
+}
+
+.copy-btn {
+    display: inline-block !important;
+    vertical-align: middle !important;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px 8px;
+    margin-left: 0;
+    border-radius: 4px;
+    color: var(--text-color);
+    opacity: 0.6;
+    transition: all 0.2s ease;
+    font-size: 0.9em;
+}
+
+.copy-btn:hover {
+    opacity: 1;
+    background: var(--tab-hover);
+    transform: scale(1.1);
+}
+
+.copy-btn:active {
+    transform: scale(0.95) !important;
+}
+
+.status {
+    text-align: center;
+    margin: 1rem 0;
+    font-size: 1.1rem;
+    color: var(--status-color);
+}
+
+/* Estilos para el contenedor del link CSS */
+.css-link-container {
+    text-align: center;
+    margin: 0.5rem 0 1rem 0;
+    padding: 0.8rem;
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-backdrop);
+    -webkit-backdrop-filter: var(--glass-backdrop);
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+    box-shadow: 0 4px 16px var(--glass-shadow);
+}
+
+.css-link-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.css-link-text {
+    background: var(--input-bg);
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--input-border);
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    color: var(--text-color);
+    word-break: break-all;
+    flex: 1;
+    min-width: 0;
+    max-width: 100%;
+}
+
+.copy-css-link-btn {
+    background: var(--tab-active);
+    border: none;
+    color: white;
+    padding: 8px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
+    min-width: 36px;
+    min-height: 36px;
+}
+
+/* Asegurar que no haya texto en el botón */
+.copy-css-link-btn::before,
+.copy-css-link-btn::after {
+    display: none;
+    content: none !important;
+}
+
+.copy-css-link-btn:hover {
+    background: var(--tab-hover);
+    transform: scale(1.05);
+}
+
+.copy-css-link-btn:active {
+    transform: scale(0.95);
+}
+
+.copy-css-link-btn i {
+    font-size: 1rem;
+}
+
+.theme-toggle {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-color);
+    padding: 8px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 9999999999999999;
+}
+
+.theme-toggle:hover {
+    background: var(--tab-hover);
+    transform: scale(1.1);
+}
+
+.error {
+    color: #ef4444;
+}
+
+/* Estilos responsive para la tabla */
+@media (max-width: 768px) {
+    .contenedortabla {
+        width: 95%;
+        overflow: visible;
+    }
+
+    .dataTables_wrapper {
+        position: relative;
+        z-index: 1;
+    }
+
+    .dataTables_wrapper .dataTables_scrollBody {
+        overflow-x: auto !important;
+    }
+
+    .dataTables_wrapper table {
+        font-size: 0.9em;
+        min-width: 600px;
+    }
+
+    th,
+    td {
+        padding: 8px 4px;
+        font-size: 0.8em;
+    }
+
+    .icon-preview {
+        font-size: 24px;
+        width: 40px;
+    }
+
+    .copy-btn {
+        padding: 2px 4px;
+        font-size: 0.8em;
+    }
+
+    /* Estilos responsive para el link CSS */
+    .css-link-container {
+        margin: 0.3rem 0 0.8rem 0;
+        padding: 0.6rem;
+    }
+
+    .css-link-content {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .css-link-text {
+        font-size: 0.8rem;
+        padding: 6px 10px;
+        text-align: center;
+    }
+
+    .copy-css-link-btn {
+        width: auto;
+        min-width: 32px;
+        min-height: 32px;
+        padding: 6px;
+        justify-content: center;
+        font-size: 0.8rem;
+    }
+
+    .main-header {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem;
+    }
+
+    .main-header h1 {
+        font-size: 1.4rem;
+    }
+
+    .tabsysearch {
+        flex-direction: row;
+    }
+
+    .tabs {
+        flex-direction: row;
+        gap: 4px;
+    }
+
+    .tab-button {
+        margin: 0;
+        font-size: 0.9rem;
+        padding: 8px;
+    }
+
+    /* Mantener thead sticky en responsive */
+    .dataTables_wrapper .dataTables_scrollHead {
+        position: sticky !important;
+        top: 65px !important;
+        z-index: 999 !important;
+        background: var(--glass-bg) !important;
+        backdrop-filter: var(--glass-backdrop) !important;
+        -webkit-backdrop-filter: var(--glass-backdrop) !important;
+    }
+
+    .dataTables_wrapper .dataTables_scrollHead table {
+        background: var(--glass-bg) !important;
+    }
+
+    .dataTables_wrapper .dataTables_scrollHead th {
+        background: var(--glass-bg) !important;
+        backdrop-filter: blur(3px) !important;
+        -webkit-backdrop-filter: blur(3px) !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .contenedortabla {
+        width: 98%;
+        overflow: visible;
+    }
+
+    .dataTables_wrapper {
+        position: relative;
+        z-index: 1;
+    }
+
+    .dataTables_wrapper .dataTables_scrollBody {
+        overflow-x: auto !important;
+    }
+
+    .dataTables_wrapper table {
+        font-size: 0.8em;
+        min-width: 500px;
+    }
+
+    th,
+    td {
+        padding: 6px 2px;
+        font-size: 0.7em;
+    }
+
+    .icon-preview {
+        font-size: 20px;
+        width: 35px;
+    }
+
+    .copy-btn {
+        padding: 1px 3px;
+        font-size: 0.7em;
+    }
+
+    /* Estilos responsive para el link CSS en pantallas muy pequeñas */
+    .css-link-container {
+        margin: 0.2rem 0 0.6rem 0;
+        padding: 0.5rem;
+    }
+
+    .css-link-content {
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .css-link-text {
+        font-size: 0.7rem;
+        padding: 5px 8px;
+        text-align: center;
+    }
+
+    .copy-css-link-btn {
+        width: auto;
+        min-width: 28px;
+        min-height: 28px;
+        padding: 5px;
+        justify-content: center;
+        font-size: 0.7rem;
+    }
+
+    .main-header h1 {
+        font-size: 1.2rem;
+    }
+
+    .tab-button {
+        font-size: 0.8rem;
+        padding: 6px;
+    }
+
+    /* Mantener thead sticky en responsive */
+    .dataTables_wrapper .dataTables_scrollHead {
+        position: sticky !important;
+        top: 65px !important;
+        z-index: 999 !important;
+        background: var(--glass-bg) !important;
+        backdrop-filter: var(--glass-backdrop) !important;
+        -webkit-backdrop-filter: var(--glass-backdrop) !important;
+    }
+
+    .dataTables_wrapper .dataTables_scrollHead table {
+        background: var(--glass-bg) !important;
+    }
+
+    .dataTables_wrapper .dataTables_scrollHead th {
+        background: var(--glass-bg) !important;
+        backdrop-filter: blur(3px) !important;
+        -webkit-backdrop-filter: blur(3px) !important;
+    }
+}
+
+/* Estilos específicos para DataTables.net */
+.dataTables_wrapper {
+    position: relative;
+}
+
+.dataTables_wrapper .dataTables_scrollHead {
+    position: sticky !important;
+    top: 110px !important;
+    z-index: 999 !important;
+    background: var(--glass-bg) !important;
+    backdrop-filter: var(--glass-backdrop) !important;
+    -webkit-backdrop-filter: var(--glass-backdrop) !important;
+    width: 100% !important;
+}
+
+.dataTables_wrapper .dataTables_scrollHead table {
+    background: var(--glass-bg) !important;
+    width: 100% !important;
+}
+
+.dataTables_wrapper .dataTables_scrollHead th {
+    background: var(--glass-bg) !important;
+    font-weight: 600 !important;
+    backdrop-filter: var(--glass-backdrop) !important;
+    -webkit-backdrop-filter: var(--glass-backdrop) !important;
+}
+
+/* Estilos para DataTables en modo oscuro */
+[data-theme="dark"] .dataTables_wrapper .dataTables_scrollHead {
+    background: var(--glass-bg) !important;
+}
+
+[data-theme="dark"] .dataTables_wrapper .dataTables_scrollHead table {
+    background: var(--glass-bg) !important;
+}
+
+[data-theme="dark"] .dataTables_wrapper .dataTables_scrollHead th {
+    background: var(--glass-bg) !important;
+}
+
+[data-theme="dark"] .dataTables_wrapper select {
+    background-color: var(--input-bg) !important;
+    color: var(--text-color) !important;
+    border: 1px solid var(--input-border) !important;
+}
+
+[data-theme="dark"] .dataTables_wrapper select option {
+    background-color: var(--input-bg) !important;
+    color: var(--text-color) !important;
+    background-image: none !important;
+}
+
+[data-theme="dark"] .dataTables_wrapper select option:checked,
+[data-theme="dark"] .dataTables_wrapper select option:hover,
+[data-theme="dark"] .dataTables_wrapper select option:focus {
+    background-color: var(--tab-active) !important;
+    color: white !important;
+}
+
+/* Estilos adicionales para forzar el tema oscuro en selects */
+[data-theme="dark"] select option {
+    background-color: #2d2d2d !important;
+    color: #e5e5e5 !important;
+}
+
+[data-theme="dark"] select option:checked {
+    background-color: #2563eb !important;
+    color: white !important;
+}
+
+[data-theme="dark"] select option:hover {
+    background-color: #404040 !important;
+    color: #e5e5e5 !important;
+}
+
+[data-theme="dark"] .dataTables_wrapper input[type="search"] {
+    background-color: var(--input-bg) !important;
+    color: var(--text-color) !important;
+    border: 1px solid var(--input-border) !important;
+}
+
+[data-theme="dark"] .dataTables_wrapper .dataTables_info {
+    color: var(--text-color) !important;
+}
+
+[data-theme="dark"] .dataTables_wrapper .dataTables_paginate .paginate_button {
+    background-color: var(--input-bg) !important;
+    color: var(--text-color) !important;
+    border: 1px solid var(--input-border) !important;
+}
+
+[data-theme="dark"] .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    background-color: var(--tab-active) !important;
+    color: white !important;
+}
+
+.dt-layout-row:first-child {
+    position: sticky !important;
+    top: 65px !important;
+    padding: 10px !important;
+    z-index: 1001 !important;
+    background: var(--glass-bg) !important;
+    backdrop-filter: var(--glass-backdrop) !important;
+    -webkit-backdrop-filter: var(--glass-backdrop) !important;
+}
