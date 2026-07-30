@@ -1,6 +1,6 @@
 # 🔍 Buscador de Iconos Gratuitos
 
-> 🎨 **Explorador visual de iconos** de Boxicons y Bootstrap Icons con búsqueda avanzada y copia con un clic
+> 🎨 **Explorador visual de iconos** de Boxicons, Bootstrap, Remix y Tabler Icons con búsqueda avanzada y copia con un clic
 
 ## 📋 Descripción
 
@@ -9,6 +9,8 @@ BuscadorIconos es una **herramienta web completa** que te permite explorar, busc
 - 📦 **Boxicons v3.0.8** (Basic, Filled, Brands)
 - 📦 **Boxicons v2.1.4** (Basic, Solid, Logos)  
 - 🅱️ **Bootstrap Icons v1.13.1**
+- 🎨 **Remix Icon v4.9.0**
+- 🔹 **Tabler Icons v3.45.0**
 
 ## ✨ Características Principales
 
@@ -41,6 +43,8 @@ BuscadorIconos es una **herramienta web completa** que te permite explorar, busc
 - 📦 **Boxicons v3.0.8** - Basic, Filled, Brands
 - 📦 **Boxicons v2.1.4** - Basic, Solid, Logos  
 - 🅱️ **Bootstrap Icons v1.13.1**
+- 🎨 **Remix Icon v4.9.0** - General
+- 🔹 **Tabler Icons v3.45.0** - General
 
 ## 🚀 Instalación y Uso
 
@@ -113,6 +117,8 @@ Edita `js/configuracionboxicons.js` para:
 | 📦 Boxicons | v3.0.8 | Basic, Filled, Brands | 1,500+ |
 | 📦 Boxicons | v2.1.4 | Basic, Solid, Logos | 1,200+ |
 | 🅱️ Bootstrap Icons | v1.13.1 | General | 2,000+ |
+| 🎨 Remix Icon | v4.9.0 | General | 3,000+ |
+| 🔹 Tabler Icons | v3.45.0 | General | 5,000+ |
 
 ## 🌟 Ventajas
 
@@ -148,6 +154,8 @@ Los iconos están bajo sus respectivas licencias:
 
 - 📦 **Boxicons** por los increíbles iconos
 - 🅱️ **Bootstrap Icons** por el conjunto completo
+- 🎨 **Remix Icon** por la versátil colección de iconos
+- 🔹 **Tabler Icons** por la gran colección open source
 - 📊 **DataTables.net** por la librería de tablas
 - 🎨 **Comunidad CSS** por las técnicas de glassmorfismo
 

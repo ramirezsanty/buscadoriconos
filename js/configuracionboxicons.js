@@ -47,6 +47,20 @@ const sources = [{
     url: 'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css',
     status: 'status-bootstrap',
     body: 'body-bootstrap'
+},
+{
+    tab: 'remix',
+    prefix: 'ri',
+    url: 'https://cdn.jsdelivr.net/npm/remixicon@4.9.0/fonts/remixicon.css',
+    status: 'status-remix',
+    body: 'body-remix'
+},
+{
+    tab: 'tabler',
+    prefix: 'ti',
+    url: 'https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.45.0/dist/tabler-icons.min.css',
+    status: 'status-tabler',
+    body: 'body-tabler'
 }
 ];
 
@@ -142,6 +156,12 @@ async function loadAndParse(source) {
         } else if (prefix === 'bi') {
             // Bootstrap Icons: .bi-nombre::before{content:"\fXXX";}
             regex = new RegExp(`\\.${prefix}-([a-z0-9-]+)::before\\s*{\\s*content:\\s*"\\\\([a-f0-9]{3,})"`, 'gi');
+        } else if (prefix === 'ri') {
+            // Remix Icon: .ri-nombre:before{content:"\eXXX";}
+            regex = new RegExp(`\\.${prefix}-([a-z0-9-]+):before\\s*{\\s*content:\\s*"\\\\([a-f0-9]{3,})"`, 'gi');
+        } else if (prefix === 'ti') {
+            // Tabler Icons: .ti-nombre:before{content:"\fXXX";}
+            regex = new RegExp(`\\.${prefix}-([a-z0-9-]+):before\\s*{\\s*content:\\s*"\\\\([a-f0-9]{3,})"`, 'gi');
         } else {
             // Filled v3: .bxf.bx-nombre:before{content:"\fXXX";}
             regex = new RegExp(`\\.${prefix}\\.bx-([a-z0-9-]+):before\\s*{\\s*content:\\s*"\\\\([a-f0-9]{3,})"`, 'gi');
@@ -186,7 +206,9 @@ async function loadAndParse(source) {
         const tableData = icons.map(icon => {
             const iconClass = prefix === 'bxf' || (prefix === 'bxl' && source.tab === 'brands')
                 ? `${prefix} bx-${icon.name}`
-                : `${prefix}-${icon.name}`;
+                : prefix === 'ti'
+                    ? `ti ti-${icon.name}`
+                    : `${prefix}-${icon.name}`;
 
             return [
                 `<i class="${iconClass}"></i>`,
@@ -205,12 +227,6 @@ async function loadAndParse(source) {
             $(table).DataTable().destroy();
         }
 
-        // Determinar headerOffset según el tamaño de pantalla
-        let headerOffset = 110; // desktop
-        if (window.innerWidth <= 768) {
-            headerOffset = 160; // tablets y móviles
-        }
-
         // Inicializar nuevo DataTable
         source.datatable = $(table).DataTable({
             data: tableData,
@@ -223,44 +239,52 @@ async function loadAndParse(source) {
             responsive: true,
             scrollX: true,
             scrollCollapse: true,
-            fixedHeader: {
-                header: true,
-                headerOffset: headerOffset,
-                footer: false
-            },
             order: [[1, 'asc']],
             initComplete: function () {
                 this.api().columns().every(function () {
-                    var column = this;
-                    var title = column.header().textContent.replace(/\s+/g, ' ').trim();
-                    
+                    const column = this;
+
+                    // La primera columna (icono) no lleva input de búsqueda
+                    if (column.index() === 0) {
+                        return;
+                    }
+
+                    const title = column.header().textContent.replace(/\s+/g, ' ').trim();
+
                     // Crear contenedor para el input
-                    var searchContainer = document.createElement('div');
+                    const searchContainer = document.createElement('div');
                     searchContainer.className = 'column-search-container';
-                    
+
                     // Crear input de búsqueda para la columna
-                    var input = document.createElement('input');
+                    const input = document.createElement('input');
                     input.placeholder = 'Buscar en ' + title;
                     input.className = 'column-search';
                     input.setAttribute('data-column', column.index());
-                    
+
                     // Agregar icono de búsqueda
-                    var searchIcon = document.createElement('i');
+                    const searchIcon = document.createElement('i');
                     searchIcon.className = 'bx bx-search column-search-icon';
-                    
+
                     searchContainer.appendChild(input);
                     searchContainer.appendChild(searchIcon);
-                    
+
                     // Insertar el contenedor debajo del header
                     column.header().appendChild(searchContainer);
-                    
+
+                    // Evitar que el click/focus en el input dispare el ordenamiento del th
+                    const stopPropagation = (e) => e.stopPropagation();
+                    input.addEventListener('click', stopPropagation);
+                    input.addEventListener('mousedown', stopPropagation);
+                    input.addEventListener('touchstart', stopPropagation);
+                    input.addEventListener('keydown', stopPropagation);
+
                     // Evento para filtrar la columna
                     input.addEventListener('keyup', function () {
                         if (column.search() !== this.value) {
                             column.search(this.value).draw();
                         }
                     });
-                    
+
                     // Evento para mostrar/ocultar icono
                     input.addEventListener('input', function() {
                         searchIcon.style.opacity = this.value ? '0.8' : '0.5';
@@ -308,17 +332,27 @@ document.addEventListener('DOMContentLoaded', () => {
     // Cargar las tres pestañas en paralelo
     sources.forEach(loadAndParse);
 
+    // Marcar el tab inicial como activo visualmente
+    const activeButton = document.querySelector('.tab-button[aria-selected="true"]');
+    if (activeButton) {
+        activeButton.classList.add('active');
+    }
+
     // Actualizar tab activo cuando se cambia
     document.querySelectorAll('.tab-button').forEach(btn => {
         btn.addEventListener('click', () => {
             // Actualizar tab activo
             currentActiveTab = btn.dataset.tab;
 
-            // Cambiar pestañas
-            document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+            // Cambiar pestañas y estados ARIA
+            document.querySelectorAll('.tab-button').forEach(b => {
+                b.classList.remove('active');
+                b.setAttribute('aria-selected', 'false');
+            });
             document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
 
             btn.classList.add('active');
+            btn.setAttribute('aria-selected', 'true');
             document.getElementById(btn.dataset.tab).classList.add('active');
 
             // Forzar redraw del DataTable para ajustar headers
@@ -331,22 +365,18 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Listener para resize - actualizar headerOffset de todos los DataTables
-    let resizeTimer;
-    window.addEventListener('resize', () => {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(() => {
-            const headerOffset = window.innerWidth <= 768 ? 65 : 110;
+    // Selector responsive de categorías
+    const tabSelect = document.getElementById('tab-select');
+    if (tabSelect) {
+        tabSelect.addEventListener('change', () => {
+            const tab = tabSelect.value;
+            if (!tab) return;
+            const btn = document.querySelector(`.tab-button[data-tab="${tab}"]`);
+            if (btn) {
+                btn.click();
+                tabSelect.blur();
+            }
+        });
+    }
 
-            sources.forEach(source => {
-                if (source && source.datatable) {
-                    // Actualizar fixedHeader
-                    if (source.datatable.fixedHeader) {
-                        source.datatable.fixedHeader.headerOffset(headerOffset);
-                        source.datatable.fixedHeader.update();
-                    }
-                }
-            });
-        }, 250);
-    });
 });

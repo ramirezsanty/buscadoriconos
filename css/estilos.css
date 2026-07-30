@@ -52,18 +52,29 @@
     --gradient-end: #16213e;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+*:focus-visible {
+    outline: 2px solid var(--tab-active);
+    outline-offset: 2px;
+}
+
 body {
-    font-family: system-ui, -apple-system, sans-serif;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     background: var(--bg-color);
     color: var(--text-color);
     margin: 0;
-    transition: all 0.3s ease;
+    min-height: 100vh;
+    line-height: 1.5;
+    transition: background-color 0.3s ease, color 0.3s ease;
     position: relative;
 }
 
@@ -110,8 +121,33 @@ h1 {
     align-items: center;
     justify-content: space-around;
     flex-wrap: wrap;
+    gap: 8px;
     z-index: 100;
     transition: all 0.3s ease;
+}
+
+.tab-select {
+    display: none;
+}
+
+.tab-group {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 4px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+    padding: 4px 8px;
+}
+
+.tab-group-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-color);
+    padding: 8px;
+    white-space: nowrap;
+    opacity: 0.85;
 }
 
 .tab-button {
@@ -140,6 +176,7 @@ h1 {
 
 .tab-content {
     display: none;
+    padding: 0 1rem;
 }
 
 .tab-content.active {
@@ -175,8 +212,9 @@ input.search {
     position: relative;
 }
 
-table {
+table.dataTable {
     border-radius: 20px !important;
+    overflow: hidden !important;
 }
 
 th,
@@ -198,6 +236,8 @@ thead {
 .dataTables_wrapper {
     position: relative;
     z-index: 1;
+    width: 100%;
+    overflow-x: auto;
 }
 
 .dt-layout-row:first-child {
@@ -221,6 +261,8 @@ th {
     -webkit-backdrop-filter: var(--glass-backdrop);
     position: relative;
     padding-bottom: 8px !important;
+    user-select: none;
+    cursor: pointer;
 }
 
 /* Estilos para inputs de búsqueda por columna */
@@ -517,38 +559,30 @@ tr:hover {
     }
 
     .tabsysearch {
-        flex-direction: row;
+        flex-direction: column;
     }
 
     .tabs {
-        flex-direction: row;
-        gap: 4px;
+        display: none;
+    }
+
+    .tab-select {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        font-size: 1rem;
+        background: var(--glass-bg);
+        color: var(--text-color);
+        border: 1px solid var(--glass-border);
+        border-radius: 8px;
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
     }
 
     .tab-button {
         margin: 0;
         font-size: 0.9rem;
         padding: 8px;
-    }
-
-    /* Mantener thead sticky en responsive */
-    .dataTables_wrapper .dataTables_scrollHead {
-        position: sticky !important;
-        top: 65px !important;
-        z-index: 999 !important;
-        background: var(--glass-bg) !important;
-        backdrop-filter: var(--glass-backdrop) !important;
-        -webkit-backdrop-filter: var(--glass-backdrop) !important;
-    }
-
-    .dataTables_wrapper .dataTables_scrollHead table {
-        background: var(--glass-bg) !important;
-    }
-
-    .dataTables_wrapper .dataTables_scrollHead th {
-        background: var(--glass-bg) !important;
-        backdrop-filter: blur(3px) !important;
-        -webkit-backdrop-filter: blur(3px) !important;
     }
 }
 
@@ -622,41 +656,11 @@ tr:hover {
         font-size: 0.8rem;
         padding: 6px;
     }
-
-    /* Mantener thead sticky en responsive */
-    .dataTables_wrapper .dataTables_scrollHead {
-        position: sticky !important;
-        top: 65px !important;
-        z-index: 999 !important;
-        background: var(--glass-bg) !important;
-        backdrop-filter: var(--glass-backdrop) !important;
-        -webkit-backdrop-filter: var(--glass-backdrop) !important;
-    }
-
-    .dataTables_wrapper .dataTables_scrollHead table {
-        background: var(--glass-bg) !important;
-    }
-
-    .dataTables_wrapper .dataTables_scrollHead th {
-        background: var(--glass-bg) !important;
-        backdrop-filter: blur(3px) !important;
-        -webkit-backdrop-filter: blur(3px) !important;
-    }
 }
 
 /* Estilos específicos para DataTables.net */
 .dataTables_wrapper {
     position: relative;
-}
-
-.dataTables_wrapper .dataTables_scrollHead {
-    position: sticky !important;
-    top: 110px !important;
-    z-index: 999 !important;
-    background: var(--glass-bg) !important;
-    backdrop-filter: var(--glass-backdrop) !important;
-    -webkit-backdrop-filter: var(--glass-backdrop) !important;
-    width: 100% !important;
 }
 
 .dataTables_wrapper .dataTables_scrollHead table {
@@ -672,10 +676,6 @@ tr:hover {
 }
 
 /* Estilos para DataTables en modo oscuro */
-[data-theme="dark"] .dataTables_wrapper .dataTables_scrollHead {
-    background: var(--glass-bg) !important;
-}
-
 [data-theme="dark"] .dataTables_wrapper .dataTables_scrollHead table {
     background: var(--glass-bg) !important;
 }
@@ -748,4 +748,69 @@ tr:hover {
     background: var(--glass-bg) !important;
     backdrop-filter: var(--glass-backdrop) !important;
     -webkit-backdrop-filter: var(--glass-backdrop) !important;
+}
+
+/* DataTables: inputs, selects y paginación coherentes con el tema */
+.dt-input,
+.dt-layout-cell select {
+    background: var(--input-bg) !important;
+    color: var(--text-color) !important;
+    border: 1px solid var(--input-border) !important;
+    border-radius: 6px;
+    padding: 6px 10px;
+}
+
+.dt-paging-button {
+    background: var(--input-bg) !important;
+    color: var(--text-color) !important;
+    border: 1px solid var(--input-border) !important;
+    border-radius: 6px !important;
+}
+
+.dt-paging-button.current,
+.dt-paging-button:hover:not(.disabled) {
+    background: var(--tab-active) !important;
+    color: #fff !important;
+    border-color: var(--tab-active) !important;
+}
+
+.dt-info,
+.dt-length,
+.dt-search {
+    color: var(--text-color) !important;
+}
+
+/* Tabla con bordes suaves y fondo temático */
+table.dataTable {
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+    background: var(--table-bg) !important;
+    width: 100% !important;
+    border-radius: 20px !important;
+    overflow: hidden !important;
+}
+
+table.dataTable th,
+table.dataTable td {
+    border: 1px solid var(--table-border) !important;
+}
+
+table.dataTable thead tr:first-child th:first-child {
+    border-top-left-radius: 20px !important;
+}
+
+table.dataTable thead tr:first-child th:last-child {
+    border-top-right-radius: 20px !important;
+}
+
+table.dataTable tbody tr:last-child td:first-child {
+    border-bottom-left-radius: 20px !important;
+}
+
+table.dataTable tbody tr:last-child td:last-child {
+    border-bottom-right-radius: 20px !important;
+}
+
+table.dataTable tbody tr:hover {
+    background: var(--table-hover) !important;
 }
