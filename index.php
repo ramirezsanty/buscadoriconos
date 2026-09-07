@@ -1,3 +1,4 @@
+<?php $cdn = require 'cdn.php'; ?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -10,28 +11,27 @@
 
   <!-- Las tres fuentes cargadas -->
   <!-- Basic Icons -->
-  <link href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css" rel="stylesheet">
+  <link href="<?= $cdn['boxicons-v3-basic'] ?>" rel="stylesheet">
   <!-- Filled Icons -->
-  <link href="https://cdn.boxicons.com/3.0.8/fonts/filled/boxicons-filled.min.css" rel="stylesheet">
+  <link href="<?= $cdn['boxicons-v3-filled'] ?>" rel="stylesheet">
   <!-- Brand Icons -->
-  <link href="https://cdn.boxicons.com/3.0.8/fonts/brands/boxicons-brands.min.css" rel="stylesheet">
+  <link href="<?= $cdn['boxicons-v3-brands'] ?>" rel="stylesheet">
 
   <!-- V2 Icons -->
-  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+  <link href="<?= $cdn['boxicons-v2'] ?>" rel="stylesheet">
 
   <!-- Bootstrap icons -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="<?= $cdn['bootstrap-icons'] ?>">
 
   <!-- Remix Icon -->
-  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.9.0/fonts/remixicon.css" rel="stylesheet">
+  <link href="<?= $cdn['remixicon'] ?>" rel="stylesheet">
 
   <!-- Tabler Icons -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.45.0/dist/tabler-icons.min.css" />
+  <link rel="stylesheet" href="<?= $cdn['tabler-icons'] ?>" />
 
   <!-- DataTables.net CSS -->
-  <link href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.min.css" rel="stylesheet">
-  <link href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css" rel="stylesheet">
-  <link href="https://cdn.datatables.net/fixedheader/4.0.1/css/fixedHeader.dataTables.min.css" rel="stylesheet">
+  <link href="<?= $cdn['datatables-css'] ?>" rel="stylesheet">
+  <link href="<?= $cdn['datatables-fixedheader-css'] ?>" rel="stylesheet">
 
   <!-- Estilos personalizados -->
   <link rel="stylesheet" href="css/estilos.css?v=<?= time(); ?>">
@@ -269,9 +269,13 @@
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
   <!-- DataTables.net JS -->
-  <script src="https://cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
-  <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
-  <script src="https://cdn.datatables.net/fixedheader/4.0.1/js/dataTables.fixedHeader.min.js"></script>
+  <script src="<?= $cdn['datatables-js'] ?>"></script>
+  <script src="<?= $cdn['datatables-fixedheader-js'] ?>"></script>
+
+  <!-- URLs de los iconos para el parser -->
+  <script>
+    window.__CDN_URLS = <?= json_encode($cdn, JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>;
+  </script>
 
   <script src="js/configuracionboxicons.js?v=<?= filemtime('js/configuracionboxicons.js'); ?>"></script>
 

@@ -1,64 +1,66 @@
 // Configuración de las tres fuentes
+const cdn = window.__CDN_URLS || {};
+
 const sources = [{
     tab: 'basic',
     prefix: 'bx',
-    url: 'https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css',
+    url: cdn['boxicons-v3-basic'] || 'https://cdn.jsdelivr.net/npm/@boxicons/core@latest/fonts/basic/boxicons.min.css',
     status: 'status-basic',
     body: 'body-basic'
 },
 {
     tab: 'filled',
     prefix: 'bxf',
-    url: 'https://cdn.boxicons.com/3.0.8/fonts/filled/boxicons-filled.min.css',
+    url: cdn['boxicons-v3-filled'] || 'https://cdn.jsdelivr.net/npm/@boxicons/core@latest/fonts/filled/boxicons-filled.min.css',
     status: 'status-filled',
     body: 'body-filled'
 },
 {
     tab: 'brands',
     prefix: 'bxl',
-    url: 'https://cdn.boxicons.com/3.0.8/fonts/brands/boxicons-brands.min.css',
+    url: cdn['boxicons-v3-brands'] || 'https://cdn.jsdelivr.net/npm/@boxicons/core@latest/fonts/brands/boxicons-brands.min.css',
     status: 'status-brands',
     body: 'body-brands'
 },
 {
     tab: 'v2',
     prefix: 'bx',
-    url: 'https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css',
+    url: cdn['boxicons-v2'] || 'https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css',
     status: 'status-v2',
     body: 'body-v2'
 },
 {
     tab: 'v2-solid',
     prefix: 'bxs',
-    url: 'https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css',
+    url: cdn['boxicons-v2'] || 'https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css',
     status: 'status-v2-solid',
     body: 'body-v2-solid'
 },
 {
     tab: 'v2-logos',
     prefix: 'bxl',
-    url: 'https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css',
+    url: cdn['boxicons-v2'] || 'https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css',
     status: 'status-v2-logos',
     body: 'body-v2-logos'
 },
 {
     tab: 'bootstrap',
     prefix: 'bi',
-    url: 'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css',
+    url: cdn['bootstrap-icons'] || 'https://cdn.jsdelivr.net/npm/bootstrap-icons@latest/font/bootstrap-icons.css',
     status: 'status-bootstrap',
     body: 'body-bootstrap'
 },
 {
     tab: 'remix',
     prefix: 'ri',
-    url: 'https://cdn.jsdelivr.net/npm/remixicon@4.9.0/fonts/remixicon.css',
+    url: cdn['remixicon'] || 'https://cdn.jsdelivr.net/npm/remixicon@latest/fonts/remixicon.css',
     status: 'status-remix',
     body: 'body-remix'
 },
 {
     tab: 'tabler',
     prefix: 'ti',
-    url: 'https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.45.0/dist/tabler-icons.min.css',
+    url: cdn['tabler-icons'] || 'https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css',
     status: 'status-tabler',
     body: 'body-tabler'
 }
